@@ -1,65 +1,96 @@
-import Head from 'next/head'
-import styles from '../styles/Home.module.css'
+import * as React from 'react';
+import Head from 'next/head';
+import { Grid, AutoSizer } from 'react-virtualized';
+const boardSize = 10;
+const pixel= 40;
+const preRender = 50;
+
+function Input({
+  label,
+  name,
+  onChange,
+  placeholder,
+  value = 0,
+}) {
+  return (
+    <div>
+      <label title={label}>
+        {label}
+      </label>
+      <input
+        aria-label={label}
+        name={name}
+        placeholder={placeholder}
+        onChange={onChange}
+        value={value}
+      />
+    </div>
+    )
+}
+
+function cellRenderer({columnIndex, key, rowIndex, style}) {
+  const label = columnIndex === 0 ?  rowIndex : columnIndex;
+  style = {
+    ...style,
+    border: '1px solid green',
+  };
+  return (
+    <div key={key} style={style} onClick={()=>alert(rowIndex)}>
+      {label}
+    </div>
+  );
+}
+
+function noContentRenderer() {
+  return <div className={styles.noCells}></div>;
+}
+
+
 
 export default function Home() {
+  const [columns, setColumns] = React.useState(boardSize);
+  const [rows, setRows] = React.useState(boardSize);
+
+  function onChangeWidth(event) {
+    setColumns(parseInt(event.target.value, 10) || 1);
+  }
+  
+  function onChangeHeight(event) {
+    setRows(parseInt(event.target.value, 10) || 1);
+  }
+
   return (
-    <div className={styles.container}>
+    <div>
       <Head>
-        <title>Create Next App</title>
+        <title>World creator</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-
-      <main className={styles.main}>
-        <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
+      <main >
+        <h1>
+          Welcome to World creator
         </h1>
 
-        <p className={styles.description}>
-          Get started by editing{' '}
-          <code className={styles.code}>pages/index.js</code>
-        </p>
+        <Input name="num-columns" placeholder="num columns" value={columns} onChange={onChangeWidth} label="Columns"></Input>
+        <Input name="num-columns" placeholder="num columns" value={rows} onChange={onChangeHeight} label="Rows"></Input>
 
-        <div className={styles.grid}>
-          <a href="https://nextjs.org/docs" className={styles.card}>
-            <h3>Documentation &rarr;</h3>
-            <p>Find in-depth information about Next.js features and API.</p>
-          </a>
-
-          <a href="https://nextjs.org/learn" className={styles.card}>
-            <h3>Learn &rarr;</h3>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
-          </a>
-
-          <a
-            href="https://github.com/vercel/next.js/tree/master/examples"
-            className={styles.card}
-          >
-            <h3>Examples &rarr;</h3>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
-
-          <a
-            href="https://vercel.com/import?filter=next.js&utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-          >
-            <h3>Deploy &rarr;</h3>
-            <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
-        </div>
+        <AutoSizer>
+          {({width}) => (
+              <Grid
+                cellRenderer={cellRenderer}
+                columnCount={columns}
+                columnWidth={pixel}
+                height={900}
+                rowCount={rows}
+                rowHeight={pixel}
+                width={width}
+                scrollToColumn={10}
+                scrollToRow={0}
+                overscanColumnCount={preRender}
+                overscanRowCount={preRender}
+              />
+            )}
+        </AutoSizer> 
       </main>
-
-      <footer className={styles.footer}>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{' '}
-          <img src="/vercel.svg" alt="Vercel Logo" className={styles.logo} />
-        </a>
-      </footer>
     </div>
   )
 }
