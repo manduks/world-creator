@@ -14,3 +14,11 @@ a {
 * {
   box-sizing: border-box;
 }
+
+.cell {
+  border: 1px solid #f3f4f6;
+}
+
+.cell:hover {
+  border: 2px solid #60a5fa;
+}

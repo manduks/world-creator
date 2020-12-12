@@ -3,9 +3,8 @@ import Head from 'next/head';
 import { Grid, AutoSizer } from 'react-virtualized';
 const boardSize = 100;
 const pixel = 40;
-const preRender = 50;
+const preRender = 10;
 const world = {};
-const blue = '#DBEAFE';
 
 function Input({
   label,
@@ -29,24 +28,28 @@ function Input({
     </div>
     )
 }
-const colors = ['#DBEAFE', '#34D399', '#78350F'];
+const colors = ['#DBEAFE', '#34D399'];
 
 function Cell({columnIndex, rowIndex, style}) {
   // const label = columnIndex === 0 ?  rowIndex : columnIndex;
   const memPosition = `${columnIndex}_${rowIndex}`;
   const [color, setColor] = React.useState(world[memPosition] || 0);
-  
+  // this is needed by react-virtualized to render the cel correctly
   style = {
     ...style,
-    border: '1px solid #F3F4F6',
     backgroundColor: colors[color],
   };
-
+  console.log(world);
   return (
-    <div style={style} onClick={()=>{
+    <div className="cell" style={style}  onClick={()=>{
       const newValue = 1 - color;
       setColor(newValue);
-      world[memPosition] = newValue;
+      // clean up memory for easier loop later
+      if(newValue) {
+        world[memPosition] = newValue;
+      } else {
+        delete world[memPosition];
+      }
     }}></div>
   );
 }
@@ -82,7 +85,6 @@ export default function Home() {
 
         <Input name="num-columns" placeholder="num columns" value={columns} onChange={onChangeWidth} label="Columns"></Input>
         <Input name="num-columns" placeholder="num columns" value={rows} onChange={onChangeHeight} label="Rows"></Input>
-
         <AutoSizer>
           {({width}) => (
               <Grid
