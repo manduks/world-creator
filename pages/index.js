@@ -1,9 +1,11 @@
 import * as React from 'react';
 import Head from 'next/head';
 import { Grid, AutoSizer } from 'react-virtualized';
-const boardSize = 10;
-const pixel= 40;
+const boardSize = 100;
+const pixel = 40;
 const preRender = 50;
+const world = {};
+const blue = '#DBEAFE';
 
 function Input({
   label,
@@ -27,22 +29,30 @@ function Input({
     </div>
     )
 }
+const colors = ['#DBEAFE', '#34D399', '#78350F'];
 
-function cellRenderer({columnIndex, key, rowIndex, style}) {
-  const label = columnIndex === 0 ?  rowIndex : columnIndex;
+function Cell({columnIndex, rowIndex, style}) {
+  // const label = columnIndex === 0 ?  rowIndex : columnIndex;
+  const memPosition = `${columnIndex}_${rowIndex}`;
+  const [color, setColor] = React.useState(world[memPosition] || 0);
+  
   style = {
     ...style,
-    border: '1px solid green',
+    border: '1px solid #F3F4F6',
+    backgroundColor: colors[color],
   };
+
   return (
-    <div key={key} style={style} onClick={()=>alert(rowIndex)}>
-      {label}
-    </div>
+    <div style={style} onClick={()=>{
+      const newValue = 1 - color;
+      setColor(newValue);
+      world[memPosition] = newValue;
+    }}></div>
   );
 }
 
-function noContentRenderer() {
-  return <div className={styles.noCells}></div>;
+function cellRenderer({columnIndex, key, rowIndex, style}) {
+  return <Cell key={key} style={style} columnIndex={columnIndex} rowIndex={rowIndex} style={style}/>
 }
 
 
@@ -54,7 +64,7 @@ export default function Home() {
   function onChangeWidth(event) {
     setColumns(parseInt(event.target.value, 10) || 1);
   }
-  
+
   function onChangeHeight(event) {
     setRows(parseInt(event.target.value, 10) || 1);
   }
