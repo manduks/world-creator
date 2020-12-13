@@ -1,23 +1,15 @@
-import * as React from 'react';
-import Head from 'next/head';
-import { Grid, AutoSizer } from 'react-virtualized';
+import * as React from "react";
+import Head from "next/head";
+import { Grid, AutoSizer } from "react-virtualized";
 const boardSize = 100;
-const pixel = 40;
+const pixel = 20;
 const preRender = 10;
 const world = {};
 
-function Input({
-  label,
-  name,
-  onChange,
-  placeholder,
-  value = 0,
-}) {
+function Input({ label, name, onChange, placeholder, value = 0 }) {
   return (
     <div>
-      <label title={label}>
-        {label}
-      </label>
+      <label title={label}>{label}</label>
       <input
         aria-label={label}
         name={name}
@@ -26,63 +18,62 @@ function Input({
         value={value}
       />
     </div>
-    )
+  );
 }
-const colors = ['#DBEAFE', '#34D399'];
+const colors = ["#3B82F6", "#10B981"];
 let visited = {};
 
-function walkTheWorld(x,y) {
+function walkTheWorld(x, y) {
   let hasMoreLand = false;
   visited[`${x}_${y}`] = true;
 
   //forward
-  if (world[`${x+1}_${y}`] && !visited[`${x+1}_${y}`]) {
+  if (world[`${x + 1}_${y}`] && !visited[`${x + 1}_${y}`]) {
     // debugger;
-    walkTheWorld(x+1, y);
+    walkTheWorld(x + 1, y);
     hasMoreLand = true;
-  } 
-  if(world[`${x}_${y+1}`] && !visited[`${x}_${y+1}`]) {
+  }
+  if (world[`${x}_${y + 1}`] && !visited[`${x}_${y + 1}`]) {
     // debugger;
-    walkTheWorld(x, y+1);
+    walkTheWorld(x, y + 1);
     hasMoreLand = true;
   }
 
   //backwards
-  if (world[`${x-1}_${y}`] && !visited[`${x-1}_${y}`]) {
+  if (world[`${x - 1}_${y}`] && !visited[`${x - 1}_${y}`]) {
     // debugger;
-    walkTheWorld(x-1, y);
+    walkTheWorld(x - 1, y);
     hasMoreLand = true;
-  } 
-  if (world[`${x}_${y-1}`] && !visited[`${x}_${y-1}`]) {
+  }
+  if (world[`${x}_${y - 1}`] && !visited[`${x}_${y - 1}`]) {
     // debugger;
-    walkTheWorld(x, y-1);
+    walkTheWorld(x, y - 1);
     hasMoreLand = true;
   }
 
   return hasMoreLand;
 }
 
-
-function isIsland(x,y) {
-  return walkTheWorld(x,y);
+function isIsland(x, y) {
+  return walkTheWorld(x, y);
 }
 
 function calculateIslands() {
   let islands = 0;
   visited = {};
 
-  Object.keys(world).forEach(key => {
-    const [x, y] = key.split('_');
+  Object.keys(world).forEach((key) => {
+    const [x, y] = key.split("_");
 
-    if(!visited[`${x}_${y}`]) {
-      islands = isIsland(Number(x),Number(y), true) ? islands + 1 : islands;
+    if (!visited[`${x}_${y}`]) {
+      islands = isIsland(Number(x), Number(y), true) ? islands + 1 : islands;
       // debugger;
     }
-  })
-  console.log({islands});
+  });
+  console.log({ islands });
 }
 
-function Cell({columnIndex, rowIndex, style}) {
+function Cell({ columnIndex, rowIndex, style }) {
   // const label = columnIndex === 0 ?  rowIndex : columnIndex;
   const memPosition = `${columnIndex}_${rowIndex}`;
   const [color, setColor] = React.useState(world[memPosition] || 0);
@@ -90,26 +81,39 @@ function Cell({columnIndex, rowIndex, style}) {
   style = {
     ...style,
     backgroundColor: colors[color],
+   // border: color ? '1px solid #10B981' : '1px solid #60A5FA'
   };
   return (
-    <div className="cell" style={style}  onClick={()=>{
-      const newValue = 1 - color;
-      setColor(newValue);
-      // clean up memory for easier loop later
-      if(newValue) {
-        world[memPosition] = newValue;
-      } else {
-        delete world[memPosition];
-      }
-      setTimeout(() => {
-        calculateIslands();
-      }, 200);
-    }}></div>
+    <div
+      className="cell"
+      style={style}
+      onClick={() => {
+        const newValue = 1 - color;
+        setColor(newValue);
+        // clean up memory for easier loop later
+        if (newValue) {
+          world[memPosition] = newValue;
+        } else {
+          delete world[memPosition];
+        }
+        setTimeout(() => {
+          calculateIslands();
+        }, 200);
+      }}
+    ></div>
   );
 }
 
-function cellRenderer({columnIndex, key, rowIndex, style}) {
-  return <Cell key={key} style={style} columnIndex={columnIndex} rowIndex={rowIndex} style={style}/>
+function cellRenderer({ columnIndex, key, rowIndex, style }) {
+  return (
+    <Cell
+      key={key}
+      style={style}
+      columnIndex={columnIndex}
+      rowIndex={rowIndex}
+      style={style}
+    />
+  );
 }
 
 export default function Home() {
@@ -130,31 +134,41 @@ export default function Home() {
         <title>World creator</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main >
-        <h1>
-          Welcome to World creator
-        </h1>
+      <main>
+        <h1>Welcome to World creator</h1>
 
-        <Input name="num-columns" placeholder="num columns" value={columns} onChange={onChangeWidth} label="Columns"></Input>
-        <Input name="num-columns" placeholder="num columns" value={rows} onChange={onChangeHeight} label="Rows"></Input>
+        <Input
+          name="num-columns"
+          placeholder="num columns"
+          value={columns}
+          onChange={onChangeWidth}
+          label="Columns"
+        ></Input>
+        <Input
+          name="num-columns"
+          placeholder="num columns"
+          value={rows}
+          onChange={onChangeHeight}
+          label="Rows"
+        ></Input>
         <AutoSizer>
-          {({width}) => (
-              <Grid
-                cellRenderer={cellRenderer}
-                columnCount={columns}
-                columnWidth={pixel}
-                height={900}
-                rowCount={rows}
-                rowHeight={pixel}
-                width={width}
-                scrollToColumn={10}
-                scrollToRow={0}
-                overscanColumnCount={preRender}
-                overscanRowCount={preRender}
-              />
-            )}
-        </AutoSizer> 
+          {({ width }) => (
+            <Grid
+              cellRenderer={cellRenderer}
+              columnCount={columns}
+              columnWidth={pixel}
+              height={900}
+              rowCount={rows}
+              rowHeight={pixel}
+              width={width}
+              scrollToColumn={10}
+              scrollToRow={0}
+              overscanColumnCount={preRender}
+              overscanRowCount={preRender}
+            />
+          )}
+        </AutoSizer>
       </main>
     </div>
-  )
+  );
 }
