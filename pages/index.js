@@ -29,6 +29,58 @@ function Input({
     )
 }
 const colors = ['#DBEAFE', '#34D399'];
+let visited = {};
+
+function walkTheWorld(x,y) {
+  let hasMoreLand = false;
+  visited[`${x}_${y}`] = true;
+
+  //forward
+  if (world[`${x+1}_${y}`] && !visited[`${x+1}_${y}`]) {
+    // debugger;
+    walkTheWorld(x+1, y);
+    hasMoreLand = true;
+  } 
+  if(world[`${x}_${y+1}`] && !visited[`${x}_${y+1}`]) {
+    // debugger;
+    walkTheWorld(x, y+1);
+    hasMoreLand = true;
+  }
+
+  //backwards
+  if (world[`${x-1}_${y}`] && !visited[`${x-1}_${y}`]) {
+    // debugger;
+    walkTheWorld(x-1, y);
+    hasMoreLand = true;
+  } 
+  if (world[`${x}_${y-1}`] && !visited[`${x}_${y-1}`]) {
+    // debugger;
+    walkTheWorld(x, y-1);
+    hasMoreLand = true;
+  }
+
+  return hasMoreLand;
+}
+
+
+function isIsland(x,y) {
+  return walkTheWorld(x,y);
+}
+
+function calculateIslands() {
+  let islands = 0;
+  visited = {};
+
+  Object.keys(world).forEach(key => {
+    const [x, y] = key.split('_');
+
+    if(!visited[`${x}_${y}`]) {
+      islands = isIsland(Number(x),Number(y), true) ? islands + 1 : islands;
+      // debugger;
+    }
+  })
+  console.log({islands});
+}
 
 function Cell({columnIndex, rowIndex, style}) {
   // const label = columnIndex === 0 ?  rowIndex : columnIndex;
@@ -39,7 +91,6 @@ function Cell({columnIndex, rowIndex, style}) {
     ...style,
     backgroundColor: colors[color],
   };
-  console.log(world);
   return (
     <div className="cell" style={style}  onClick={()=>{
       const newValue = 1 - color;
@@ -50,6 +101,9 @@ function Cell({columnIndex, rowIndex, style}) {
       } else {
         delete world[memPosition];
       }
+      setTimeout(() => {
+        calculateIslands();
+      }, 200);
     }}></div>
   );
 }
@@ -57,8 +111,6 @@ function Cell({columnIndex, rowIndex, style}) {
 function cellRenderer({columnIndex, key, rowIndex, style}) {
   return <Cell key={key} style={style} columnIndex={columnIndex} rowIndex={rowIndex} style={style}/>
 }
-
-
 
 export default function Home() {
   const [columns, setColumns] = React.useState(boardSize);
