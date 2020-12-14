@@ -20,7 +20,6 @@ const initialState = {
   squaresCount: 0,
   islandsCount: 0,
 };
-
 const StatsContext = React.createContext<StatsInterface | undefined>(undefined);
 const StatsDispatchContext = React.createContext<Dispatch | undefined>(undefined);
 
@@ -49,10 +48,11 @@ function StatsProvider({ children }: StatsProviderProps) {
     </StatsContext.Provider>
   )
 }
+
 function useStatsContext() {
   const context = React.useContext(StatsContext)
   if (context === undefined) {
-    throw new Error('useStatsContext must be used within a CountProvider')
+    throw new Error('useStatsContext must be used within a StatsProvider')
   }
   return context;
 }
@@ -60,7 +60,7 @@ function useStatsContext() {
 function useStatsDispatch() {
   const context = React.useContext(StatsDispatchContext)
   if (context === undefined) {
-    throw new Error('useCountDispatch must be used within a CountProvider')
+    throw new Error('useStatsDispatch must be used within a StatsProvider')
   }
   return context;
 }

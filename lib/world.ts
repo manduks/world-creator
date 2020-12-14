@@ -1,9 +1,15 @@
-
 // save world in an object
 let world = {};
 // cache visited to avoid duplication
 let visited = {};
 
+/**
+ * 
+ * @param x 
+ * @param y 
+ * we check if it is an island and also continue to walk the island
+ * to mark other squares as visited to avoid walking twite the same island
+ */
 function walkTheWorld(x:number, y:number): boolean {
   let hasMoreLand = false;
   visited[`${x}_${y}`] = true;  

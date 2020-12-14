@@ -44,7 +44,6 @@ describe('<Index Page />', () => {
   });
  
   it('renders and fires inputs validations', async () => {
-    // const jsdomAlert = window.alert;  // remember the jsdom alert
     jest.spyOn(window, 'alert').mockImplementation(() => {});
     render(
       <Index />
