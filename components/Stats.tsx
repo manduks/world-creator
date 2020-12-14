@@ -1,14 +1,16 @@
 import * as React from "react";
+import { useStatsContext } from 'context/StatsContext';
 
 export default function Stats() {
-  const [squares, islands] = [12, 58];
+  const { squaresCount, islandsCount } = useStatsContext()
+
   return (
     <div className="stats">
       <div>
-        <span className="square"/> {squares} squares
+        <span className="square"/> {squaresCount} squares
       </div>
       <div>
-        <span className="square island"/> {islands} islands
+        <span className="square island"/> {islandsCount} islands
       </div>
     </div>
   )

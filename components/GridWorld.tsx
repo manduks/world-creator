@@ -3,7 +3,7 @@ import { Grid, AutoSizer } from "react-virtualized";
 import Cell from 'components/Cell';
 
 export const BOARD_SIZE = 100;
-const CELL_SIZE = 20;
+const CELL_SIZE = 40;
 const PRE_RENDER_ITEMS = 10;
 
 
