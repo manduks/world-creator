@@ -1,6 +1,7 @@
 import * as React from 'react'
-import { render, fireEvent, screen } from '@testing-library/react';
-import Index from '../pages/index'
+import { render, fireEvent, screen, waitFor } from '@testing-library/react';
+import Index from '../pages/index';
+import { MAX_VALUE, MIN_VALUE } from 'components/SizeInput';
 
 describe('<Index Page />', () => {
   // code for AutoSizer
@@ -22,10 +23,10 @@ describe('<Index Page />', () => {
       <Index />
     );
     const widthInput = screen.getByLabelText('Width:')
-    const heigthInput = screen.getByLabelText('Width:')
+    const heigthInput = screen.getByLabelText('Height:')
     fireEvent.change(widthInput, { target: { value: '10' } });
     fireEvent.change(heigthInput, { target: { value: '10' } });
-    expect(screen.getAllByTestId('grid-cell').length).toBe(120); // 20 more for vitualization
+    expect(screen.getAllByTestId('grid-cell').length).toBe(100);
     
     // create islands
     const allCells = screen.getAllByTestId('grid-cell');
@@ -37,5 +38,23 @@ describe('<Index Page />', () => {
     fireEvent.click(allCells[1]);
     expect(screen.getByText('2 squares')).toBeTruthy();
     expect(screen.getByText('1 islands')).toBeTruthy();
+    fireEvent.mouseOver(allCells[1]);
+    expect(screen.getByText('x : 1')).toBeTruthy();
+    expect(screen.getByText('y : 0')).toBeTruthy();
+  });
+ 
+  it('renders and fires inputs validations', async () => {
+    // const jsdomAlert = window.alert;  // remember the jsdom alert
+    jest.spyOn(window, 'alert').mockImplementation(() => {});
+    render(
+      <Index />
+    );
+    const widthInput = screen.getByLabelText('Width:');
+
+    fireEvent.change(widthInput, { target: { value: '1000000' } });
+    expect(window.alert).toBeCalledWith(`Oops, max value allowed is ${MAX_VALUE}`)
+
+    fireEvent.change(widthInput, { target: { value: '0' } });
+    expect(window.alert).toBeCalledWith(`Oops, min value allowed is ${MIN_VALUE}`)
   });
 });

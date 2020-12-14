@@ -7,8 +7,8 @@ interface SizeInputProps {
   value: number;
   onChange: Function,
 }
-const MIN_VALUE = 1;
-const MAX_VALUE = 100000;
+export const MIN_VALUE = 1;
+export const MAX_VALUE = 100000;
 
 export default function SizeInput({ label, name, placeholder, value, onChange, ...rest }: SizeInputProps) {
   return (
@@ -27,10 +27,10 @@ export default function SizeInput({ label, name, placeholder, value, onChange, .
           const value = parseInt(e.target.value, 10) || 0;
           
           if(value > MAX_VALUE) {
-            return alert(`Max value allowed is ${MAX_VALUE}`);
+            return alert(`Oops, max value allowed is ${MAX_VALUE}`);
           }
           if(value < MIN_VALUE) {
-            return alert(`Min value allowed is ${MIN_VALUE}`);
+            return alert(`Oops, min value allowed is ${MIN_VALUE}`);
           }
           onChange(value);
         }}
