@@ -65,5 +65,5 @@ function useStatsDispatch() {
   return context;
 }
 
-export {StatsProvider, useStatsContext, useStatsDispatch}
+export { StatsProvider, useStatsContext, useStatsDispatch };
 

@@ -70,12 +70,12 @@ exports[`renders homepage unchanged 1`] = `
           className="input-container"
         >
           <label
-            title="Width: "
+            title="Width:"
           >
-            Width: 
+            Width:
           </label>
           <input
-            aria-label="Width: "
+            aria-label="Width:"
             max={100000}
             min={1}
             name="width"
@@ -108,7 +108,9 @@ exports[`renders homepage unchanged 1`] = `
       <div
         className="stats"
       >
-        <div>
+        <div
+          data-testid="stats-squares"
+        >
           <span
             className="square"
           />
@@ -118,7 +120,7 @@ exports[`renders homepage unchanged 1`] = `
         </div>
         <div>
           <span
-            className="square island"
+            data-testid="stats-islands"
           />
            
           0

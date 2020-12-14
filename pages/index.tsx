@@ -43,7 +43,7 @@ export default function Home() {
                 placeholder="width"
                 value={columns}
                 onChange={onChangeWidth}
-                label="Width: "
+                label="Width:"
               ></SizeInput>
               <SizeInput
                 name="height"

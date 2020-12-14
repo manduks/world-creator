@@ -1,13 +1,12 @@
 
 // save world in an object
-export const world = {};
+let world = {};
 // cache visited to avoid duplication
 let visited = {};
 
 function walkTheWorld(x, y) {
   let hasMoreLand = false;
-  visited[`${x}_${y}`] = true;
-
+  visited[`${x}_${y}`] = true;  
   //forward
   if (world[`${x + 1}_${y}`] && !visited[`${x + 1}_${y}`]) {
     walkTheWorld(x + 1, y);
@@ -35,7 +34,7 @@ function isIsland(x, y) {
   return walkTheWorld(x, y);
 }
 
-export function calculateIslands() {
+function calculateIslands() {
   let islands = 0;
   visited = {};
 
@@ -49,3 +48,22 @@ export function calculateIslands() {
 
   return islands;
 }
+
+function setWorld(newWorld) {
+  world = { ...newWorld };
+  return world;
+}
+
+function getWorld() {
+  return world;
+}
+
+function setLand(position, value) {
+  world[position] = value;
+}
+
+function deleteLand(newWorld) {
+  world = { ...newWorld };
+}
+
+export { world, walkTheWorld, calculateIslands, setWorld, getWorld, setLand, deleteLand };

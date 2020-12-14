@@ -5,7 +5,6 @@ interface SizeInputProps {
   name: string;
   placeholder: string;
   value: number;
-  rest: object;
   onChange: Function,
 }
 const MIN_VALUE = 1;

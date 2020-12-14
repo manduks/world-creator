@@ -1,8 +1,8 @@
 
 import * as React from "react";
 import { colors } from 'styles/colors';
-import { world, calculateIslands } from 'lib/world';
-import { useStatsDispatch, useStatsContext } from 'context/StatsContext';
+import { getWorld, calculateIslands, setLand, deleteLand } from 'lib/world';
+import { useStatsDispatch } from 'context/StatsContext';
 
 interface CellProps {
   columnIndex: number;
@@ -13,6 +13,7 @@ interface CellProps {
 export default function Cell({ columnIndex, rowIndex, style }: CellProps) {
   const dispatch = useStatsDispatch();
   const memPosition = `${columnIndex}_${rowIndex}`;
+  const world = getWorld();
   const [color, setColor] = React.useState(world[memPosition] || 0);
   // this is needed by react-virtualized to render the cell correctly
   style = {
@@ -22,21 +23,21 @@ export default function Cell({ columnIndex, rowIndex, style }: CellProps) {
   return (
     <div
       className="cell"
+      data-testid="grid-cell"
       style={style}
       onClick={() => {
         const newValue = 1 - color; // toggle color between 0 and 1
         if (newValue) {
-          world[memPosition] = newValue;
+          setLand(memPosition, newValue);
         } else { // clean up memory for easier loop later
-          delete world[memPosition];
+          deleteLand(memPosition);
         }
-
         setColor(newValue);
         dispatch({
           type: 'square', 
           islandsCount: calculateIslands(),
           squaresCount: Object.keys(world).length,
-        });
+        });        
       }}
       onMouseEnter={() => { 
         dispatch({type: 'cursor', cursor:{ x: columnIndex, y: rowIndex}}); 

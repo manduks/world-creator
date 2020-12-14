@@ -6,11 +6,11 @@ export default function Stats() {
 
   return (
     <div className="stats">
-      <div>
+      <div data-testid="stats-squares">
         <span className="square"/> {squaresCount} squares
       </div>
       <div>
-        <span className="square island"/> {islandsCount} islands
+        <span data-testid="stats-islands"/> {islandsCount} islands
       </div>
     </div>
   )
