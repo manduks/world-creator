@@ -4,7 +4,7 @@ let world = {};
 // cache visited to avoid duplication
 let visited = {};
 
-function walkTheWorld(x, y) {
+function walkTheWorld(x:number, y:number): boolean {
   let hasMoreLand = false;
   visited[`${x}_${y}`] = true;  
   //forward
@@ -30,11 +30,11 @@ function walkTheWorld(x, y) {
   return hasMoreLand;
 }
 
-function isIsland(x, y) {
+function isIsland(x: number, y: number):boolean {
   return walkTheWorld(x, y);
 }
 
-function calculateIslands() {
+function calculateIslands():number {
   let islands = 0;
   visited = {};
 
@@ -49,21 +49,21 @@ function calculateIslands() {
   return islands;
 }
 
-function setWorld(newWorld) {
+function setWorld(newWorld: object) {
   world = { ...newWorld };
   return world;
 }
 
-function getWorld() {
+function getWorld(): object {
   return world;
 }
 
-function setLand(position, value) {
+function setLand(position: string, value: number) {
   world[position] = value;
 }
 
-function deleteLand(newWorld) {
-  world = { ...newWorld };
+function deleteLand(position: string): void {
+  delete world[position];
 }
 
 export { world, walkTheWorld, calculateIslands, setWorld, getWorld, setLand, deleteLand };
