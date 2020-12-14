@@ -242,6 +242,7 @@ footer {
   flex-direction: row;
   padding: 8px;
   align-items: center;
+  width: 150px;
 }
 .square {
   display: block;
@@ -285,5 +286,9 @@ footer {
     width: 10px;
     height: 10px;
     margin: 0 4px;
+  }
+
+  .stats div {
+    width: 100px;
   }
 }
