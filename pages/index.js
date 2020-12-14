@@ -11,12 +11,12 @@ export default function Home() {
   const [columns, setColumns] = React.useState(BOARD_SIZE);
   const [rows, setRows] = React.useState(BOARD_SIZE);
 
-  function onChangeWidth(event) {
-    setColumns(parseInt(event.target.value, 10) || 1);
+  function onChangeWidth(value) {
+    setColumns(value);
   }
 
-  function onChangeHeight(event) {
-    setRows(parseInt(event.target.value, 10) || 1);
+  function onChangeHeight(value) {
+    setRows(value);
   }
 
   return (

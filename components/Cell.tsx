@@ -25,10 +25,9 @@ export default function Cell({ columnIndex, rowIndex, style }: CellProps) {
       style={style}
       onClick={() => {
         const newValue = 1 - color; // toggle color between 0 and 1
-        // clean up memory for easier loop later
         if (newValue) {
           world[memPosition] = newValue;
-        } else {
+        } else { // clean up memory for easier loop later
           delete world[memPosition];
         }
 
