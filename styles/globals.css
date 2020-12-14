@@ -168,7 +168,7 @@ h1 {
 
 .world-container {
   display: block;
-  border: 1px solid blue;
+  border: 1px solid #3b82f6;
   width: 100%;
   height: calc(100vh - 160px); /* header and footer */
 }
