@@ -5,129 +5,31 @@ exports[`renders homepage unchanged 1`] = `
   className="container"
 >
   <main>
-    <div
-      className="header"
+    <section
+      className="menu-selection"
     >
       <h1>
         Island Creator
       </h1>
-      <span>
-        Click on the canvas to start creating Islands
-      </span>
-    </div>
-    <div
-      className="world-container"
-    >
       <div
-        style={
-          Object {
-            "height": 0,
-            "overflow": "visible",
-            "width": 0,
-          }
-        }
+        className="selection-items"
       >
-        <div
-          aria-label="grid"
-          aria-readonly={true}
-          className="ReactVirtualized__Grid"
-          onScroll={[Function]}
-          role="grid"
-          style={
-            Object {
-              "WebkitOverflowScrolling": "touch",
-              "boxSizing": "border-box",
-              "direction": "ltr",
-              "height": 0,
-              "overflowX": "auto",
-              "overflowY": "auto",
-              "position": "relative",
-              "width": 0,
-              "willChange": "transform",
-            }
-          }
-          tabIndex={0}
-        />
-      </div>
-    </div>
-    <footer>
-      <div
-        className="cursor"
-      >
-        <span>
-          x : 
-          0
-        </span>
-        <span>
-          y : 
-          0
-        </span>
-      </div>
-      <div
-        className="footer-inputs"
-      >
-        <div
-          className="input-container"
+        <a
+          href="/virtualized"
+          onClick={[Function]}
+          onMouseEnter={[Function]}
         >
-          <label
-            title="Width:"
-          >
-            Width:
-          </label>
-          <input
-            aria-label="Width:"
-            max={100000}
-            min={1}
-            name="width"
-            onChange={[Function]}
-            placeholder="width"
-            type="number"
-            value={100}
-          />
-        </div>
-        <div
-          className="input-container"
+          Virtualized
+        </a>
+        <a
+          href="/canvas"
+          onClick={[Function]}
+          onMouseEnter={[Function]}
         >
-          <label
-            title="Height:"
-          >
-            Height:
-          </label>
-          <input
-            aria-label="Height:"
-            max={100000}
-            min={1}
-            name="height"
-            onChange={[Function]}
-            placeholder="height"
-            type="number"
-            value={100}
-          />
-        </div>
+          Canvas
+        </a>
       </div>
-      <div
-        className="stats"
-      >
-        <div
-          data-testid="stats-squares"
-        >
-          <span
-            className="square"
-          />
-           
-          0
-           squares
-        </div>
-        <div>
-          <span
-            data-testid="stats-islands"
-          />
-           
-          0
-           islands
-        </div>
-      </div>
-    </footer>
+    </section>
   </main>
 </div>
 `;

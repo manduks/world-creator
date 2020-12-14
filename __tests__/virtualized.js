@@ -1,9 +1,9 @@
 import * as React from 'react'
 import { render, fireEvent, screen, waitFor } from '@testing-library/react';
-import Index from '../pages/index';
+import Index from '../pages/virtualized';
 import { MAX_VALUE, MIN_VALUE } from 'components/SizeInput';
 
-describe('<Index Page />', () => {
+describe('<Virtualizef Page />', () => {
   // code for AutoSizer
   const originalOffsetHeight = Object.getOwnPropertyDescriptor(HTMLElement.prototype, 'offsetHeight');
   const originalOffsetWidth = Object.getOwnPropertyDescriptor(HTMLElement.prototype, 'offsetWidth');
