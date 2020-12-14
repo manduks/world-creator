@@ -168,7 +168,7 @@ h1 {
 
 .world-container {
   display: block;
-  border: 1px solid blue;
+  border: 1px solid #3b82f6;
   width: 100%;
   height: calc(100vh - 160px); /* header and footer */
 }
@@ -254,6 +254,38 @@ footer {
   background-color: #10b981;
 }
 
+.menu-selection {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
+  flex-direction: column;
+}
+
+.menu-selection a {
+  border: 1px solid #3b82f6;
+  height: 200px;
+  width: 200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 24px;
+  text-decoration: none;
+  color: white;
+  margin: 16px;
+}
+
+.menu-selection a:hover {
+  background: #3b82f6;
+}
+
+.selection-items {
+  display: flex;
+  flex-direction: row;
+  padding: 32px;
+}
+
 /*mobile*/
 @media only screen and (max-width: 834px) {
   .input-container {
@@ -281,9 +313,16 @@ footer {
     font-size: 12px;
     padding: 4px;
   }
+
   .square {
     width: 10px;
     height: 10px;
     margin: 0 4px;
+  }
+
+  .selection-items {
+    display: flex;
+    flex-direction: column;
+    padding: 12px;
   }
 }
