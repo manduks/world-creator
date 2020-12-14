@@ -24,8 +24,12 @@ export default function Home() {
       <div className="container">
         <Head>
           <title>Island creator</title>
-          <link rel="icon" href="/poster.png" />
+          <link rel="icon" href="/favicon.ico" />
           <meta name="description" content="Island creator 1.0" />
+          <meta
+            property="og:image"
+            content="poster.png"
+          />
         </Head>
         <main>
           <div className="header">
