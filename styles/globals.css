@@ -222,7 +222,7 @@ footer {
 .cursor {
   display: flex;
   flex-direction: column;
-  font-size: 12;
+  font-size: 14px;
   padding: 16px;
   width: 120px;
 }
@@ -234,7 +234,6 @@ footer {
 .stats {
   display: flex;
   flex-direction: row;
-  font-size: 12;
   padding: 16px;
   font-size: 18px;
 }
@@ -253,4 +252,38 @@ footer {
 }
 .island {
   background-color: #10b981;
+}
+
+/*mobile*/
+@media only screen and (max-width: 834px) {
+  .input-container {
+    width: 120px;
+    font-size: 14px;
+  }
+
+  .input-container input {
+    height: 40px;
+    width: 60px;
+    font-size: 14px;
+  }
+
+  .input-container label {
+    padding: 0 8px;
+  }
+
+  .cursor {
+    display: none;
+  }
+
+  .stats {
+    display: flex;
+    flex-direction: column;
+    font-size: 12px;
+    padding: 4px;
+  }
+  .square {
+    width: 10px;
+    height: 10px;
+    margin: 0 4px;
+  }
 }

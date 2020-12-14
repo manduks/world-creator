@@ -23,8 +23,9 @@ export default function Home() {
     <StatsProvider>
       <div className="container">
         <Head>
-          <title>World creator</title>
+          <title>Island creator</title>
           <link rel="icon" href="/favicon.ico" />
+          <meta name="description" content="Island creator 1.0" />
         </Head>
         <main>
           <div className="header">
