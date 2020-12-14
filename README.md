@@ -6,7 +6,7 @@
 
 This tiny world will be represented by a grid that starts as all sea and then the user can click on the world and add or remove land and create tiny islands. The user will need to be able to change the size of this tiny world and have data displayed about this world.
 
-[Demo](https://nextjs.org/)
+[Demo](https://island-creator.vercel.app/)
 
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app) to create a canvas using a grid system.
 
