@@ -11,7 +11,7 @@ interface SizeInputProps {
 
 export default function SizeInput({ label, name, placeholder, value, ...rest }: SizeInputProps) {
   return (
-    <div>
+    <div className="input-container">
       <label title={label}>{label}</label>
       <input
         aria-label={label}

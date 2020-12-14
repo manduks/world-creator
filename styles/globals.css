@@ -1,21 +1,255 @@
+/* http://meyerweb.com/eric/tools/css/reset/ 
+   v2.0 | 20110126
+   License: none (public domain)
+*/
 html,
-body {
-  padding: 0;
+body,
+div,
+span,
+applet,
+object,
+iframe,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+pre,
+a,
+abbr,
+acronym,
+address,
+big,
+cite,
+code,
+del,
+dfn,
+em,
+img,
+ins,
+kbd,
+q,
+s,
+samp,
+small,
+strike,
+strong,
+sub,
+sup,
+tt,
+var,
+b,
+u,
+i,
+center,
+dl,
+dt,
+dd,
+ol,
+ul,
+li,
+fieldset,
+form,
+label,
+legend,
+table,
+caption,
+tbody,
+tfoot,
+thead,
+tr,
+th,
+td,
+article,
+aside,
+canvas,
+details,
+embed,
+figure,
+figcaption,
+footer,
+header,
+hgroup,
+menu,
+nav,
+output,
+ruby,
+section,
+summary,
+time,
+mark,
+audio,
+video {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
-  background-color: #fff;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+menu,
+nav,
+section {
+  display: block;
+}
+body {
+  line-height: 1;
+}
+ol,
+ul {
+  list-style: none;
+}
+blockquote,
+q {
+  quotes: none;
+}
+blockquote:before,
+blockquote:after,
+q:before,
+q:after {
+  content: "";
+  content: none;
+}
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
 }
 
-a {
-  color: inherit;
-  text-decoration: none;
+html,
+body {
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+}
+
+.container {
+  height: 100vh;
+  width: 100vw;
 }
 
 * {
   box-sizing: border-box;
 }
 
+main {
+  height: 100vh;
+  width: 100vw;
+  color: #fefefe;
+  background-color: #010312;
+}
+
+h1 {
+  font-size: 2em;
+  text-align: center;
+}
+
+.header {
+  height: 100px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.header span {
+  padding: 12px;
+}
+
+.world-container {
+  display: block;
+  border: 1px solid blue;
+  width: 100%;
+  height: calc(100vh - 160px); /* header and footer */
+}
+
 .cell:hover {
   border: 2px solid #6ee7b7;
+}
+
+footer {
+  height: 60px;
+  position: fixed;
+  width: 100%;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/*inputs*/
+.footer-inputs {
+  display: flex;
+  flex-direction: row;
+}
+
+.input-container {
+  display: flex;
+  flex-direction: row;
+  width: 200px;
+  height: 40px;
+  align-items: center;
+  font-size: 24px;
+}
+
+.input-container input {
+  height: 40px;
+  width: 100px;
+  align-items: center;
+  justify-content: center;
+  background-color: #010312;
+  border: 2px solid #374151;
+  border-radius: 4px;
+  color: white;
+  font-size: 24px;
+  text-align: center;
+}
+.input-container label {
+  padding: 0 8px;
+}
+
+/*cursor*/
+.cursor {
+  display: flex;
+  flex-direction: column;
+  font-size: 12;
+  padding: 16px;
+}
+.cursor span {
+  padding: 2px;
+}
+
+/*stats*/
+.stats {
+  display: flex;
+  flex-direction: row;
+  font-size: 12;
+  padding: 16px;
+  font-size: 18px;
+}
+.stats div {
+  display: flex;
+  flex-direction: row;
+  padding: 8px;
+  align-items: center;
+}
+.square {
+  display: block;
+  width: 20px;
+  height: 20px;
+  border: 1px solid #10b981;
+  margin: 0 8px;
+}
+.island {
+  background-color: #10b981;
 }

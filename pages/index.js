@@ -1,6 +1,8 @@
 import * as React from "react";
 import Head from "next/head";
 import SizeInput from 'components/SizeInput';
+import Cursor from 'components/Cursor';
+import Stats from 'components/Stats';
 import World, { BOARD_SIZE } from 'components/GridWorld';
 
 
@@ -17,30 +19,39 @@ export default function Home() {
   }
 
   return (
-    <div>
+    <div className="container">
       <Head>
         <title>World creator</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
-        <h1>Welcome to World creator</h1>
-
-        <SizeInput
-          name="num-columns"
-          placeholder="num columns"
-          value={columns}
-          onChange={onChangeWidth}
-          label="Columns"
-        ></SizeInput>
-        <SizeInput
-          name="num-columns"
-          placeholder="num columns"
-          value={rows}
-          onChange={onChangeHeight}
-          label="Rows"
-        ></SizeInput>
-        
-        <World rows={rows} columns={columns}/>
+        <div className="header">
+          <h1>Island Creator</h1>
+          <span>Click on the canvas to start creating Islands</span>
+        </div>
+        <div className="world-container">
+          <World rows={rows} columns={columns}/>
+        </div>
+        <footer>
+          <Cursor/>
+          <div className="footer-inputs">
+            <SizeInput
+              name="width"
+              placeholder="width"
+              value={columns}
+              onChange={onChangeWidth}
+              label="Width: "
+            ></SizeInput>
+            <SizeInput
+              name="height"
+              placeholder="height"
+              value={rows}
+              onChange={onChangeHeight}
+              label="Height:"
+            ></SizeInput>
+          </div>
+          <Stats />
+        </footer>
       </main>
     </div>
   );
