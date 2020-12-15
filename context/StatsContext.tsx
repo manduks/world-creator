@@ -8,7 +8,7 @@ interface StatsInterface {
   islandsCount?: number;
 }
 interface Action extends StatsInterface { 
-  type: 'cursor'| 'square'
+  type: 'cursor' | 'square' | 'reset'
 }
 type Dispatch = (action: Action) => void
 
@@ -29,7 +29,12 @@ function statsReducer(state: StatsInterface, action: Action) {
       return { ...state, cursor: action.cursor };
     }
     case 'square': {
-      return { ...state, squaresCount: action.squaresCount, islandsCount:  action.islandsCount,};
+      return { ...state, squaresCount: action.squaresCount, islandsCount:  action.islandsCount};
+    }
+    case 'reset': {
+      return {
+        ...initialState,
+      };
     }
     default: {
       throw new Error(`Unhandled action type: ${action.type}`)
@@ -50,7 +55,7 @@ function StatsProvider({ children }: StatsProviderProps) {
 }
 
 function useStatsContext() {
-  const context = React.useContext(StatsContext)
+  const context = React.useContext(StatsContext);
   if (context === undefined) {
     throw new Error('useStatsContext must be used within a StatsProvider')
   }
@@ -58,7 +63,7 @@ function useStatsContext() {
 }
 
 function useStatsDispatch() {
-  const context = React.useContext(StatsDispatchContext)
+  const context = React.useContext(StatsDispatchContext);
   if (context === undefined) {
     throw new Error('useStatsDispatch must be used within a StatsProvider')
   }

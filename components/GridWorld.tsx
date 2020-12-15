@@ -6,7 +6,6 @@ export const BOARD_SIZE = 100;
 const CELL_SIZE = 40;
 const PRE_RENDER_ITEMS = 10;
 
-
 function cellRenderer(props) {
   return (
     <Cell
@@ -24,9 +23,22 @@ interface GridProps {
 }
 
 export default function GridWorld({ rows, columns }: GridProps) {
+  const [forceRefresh, setForceRefresh] = React.useState(false);
+
+  // refresh grid when dimensions change
+  React.useEffect(() => {
+    setForceRefresh(true);
+    const timeout = setTimeout(() => {
+      setForceRefresh(false);
+    });
+
+    return () => clearTimeout(timeout);
+  }, [rows, columns]);
+  
   return (
     <AutoSizer>
       {({ width, height }) => (
+        forceRefresh ? null :
         <Grid
           cellRenderer={cellRenderer}
           columnCount={columns}

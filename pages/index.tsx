@@ -4,23 +4,30 @@ import SizeInput from 'components/SizeInput';
 import Cursor from 'components/Cursor';
 import Stats from 'components/Stats';
 import World, { BOARD_SIZE } from 'components/GridWorld';
-import { StatsProvider } from 'context/StatsContext';
+import { setWorld } from 'lib/world';
+import { useStatsDispatch } from 'context/StatsContext';
 
+function resetWorld(dispatch:Function): void {
+  dispatch({type: 'reset'});
+  setWorld({});
+}
 
 export default function Home() {
   const [columns, setColumns] = React.useState(BOARD_SIZE);
   const [rows, setRows] = React.useState(BOARD_SIZE);
+  const dispatch = useStatsDispatch();
 
   function onChangeWidth(value) {
+    resetWorld(dispatch);
     setColumns(value);
   }
 
   function onChangeHeight(value) {
+    resetWorld(dispatch);
     setRows(value);
   }
 
   return (
-    <StatsProvider>
       <div className="container">
         <Head>
           <title>Island creator</title>
@@ -28,7 +35,7 @@ export default function Home() {
           <meta name="description" content="Island creator 1.0" />
           <meta
             property="og:image"
-            content="poster.png"
+            content="/poster.png"
           />
         </Head>
         <main>
@@ -48,19 +55,18 @@ export default function Home() {
                 value={columns}
                 onChange={onChangeWidth}
                 label="Width:"
-              ></SizeInput>
+              />
               <SizeInput
                 name="height"
                 placeholder="height"
                 value={rows}
                 onChange={onChangeHeight}
                 label="Height:"
-              ></SizeInput>
+              />
             </div>
             <Stats />
           </footer>
         </main>
       </div>
-    </StatsProvider>
-  );
+   );
 }

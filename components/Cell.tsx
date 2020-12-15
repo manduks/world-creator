@@ -15,11 +15,13 @@ export default function Cell({ columnIndex, rowIndex, style }: CellProps) {
   const memPosition = `${columnIndex}_${rowIndex}`;
   const world = getWorld();
   const [color, setColor] = React.useState(world[memPosition] || 0);
+    
   // this is needed by react-virtualized to render the cell correctly
   style = {
     ...style,
     backgroundColor: colors[color],
   };
+
   return (
     <div
       className="cell"

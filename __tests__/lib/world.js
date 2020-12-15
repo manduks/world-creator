@@ -31,13 +31,13 @@ describe('walkTheWorld', () => {
     expect(value).toBe(false);
   });
  
-  it('should return false when is only one square of land', () => {
+  it('should return true when finding one island with one square', () => {
     setWorld({"7_5":1});
     const value = walkTheWorld(7,5);
-    expect(value).toBe(false);
+    expect(value).toBe(true);
   });
   
-  it('should return true when finding one island', () => {
+  it('should return true when finding ne island with two squares', () => {
     setWorld({"7_5":1,"8_5":1});
     const value = walkTheWorld(7,5);
     expect(value).toBe(true);
@@ -45,14 +45,14 @@ describe('walkTheWorld', () => {
 });
 
 describe('calculateIslands', () => {
-  it('should return 5 islands', () => {
+  it('should return 8 islands', () => {
     setWorld(worldMock);
     const value = calculateIslands(4,5);
-    expect(value).toBe(6);
+    expect(value).toBe(8);
   });
   
   it('should return 0 islands', () => {
-    setWorld({"7_5":1});
+    setWorld({});
     const value = calculateIslands(4,5);
     expect(value).toBe(0);
   });
