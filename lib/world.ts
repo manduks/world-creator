@@ -1,3 +1,4 @@
+import { CoordinatesArray } from 'types/world';
 // save world in an object
 let world = {};
 // cache visited to avoid duplication
@@ -10,12 +11,12 @@ let visited = {};
  * we check if it is an island and also continue to walk the island
  * to mark other squares as visited to avoid walking twice the same island
  */
-function walkTheWorld(x:number, y:number): boolean {
-  if(isWorldEmpty()) {
+function walkTheWorld(x: number, y: number): boolean {
+  if (isWorldEmpty()) {
     return false;
   }
 
-  visited[`${x}_${y}`] = true;  
+  visited[`${x}_${y}`] = true;
   //forward
   if (world[`${x + 1}_${y}`] && !visited[`${x + 1}_${y}`]) {
     walkTheWorld(x + 1, y);
@@ -35,11 +36,11 @@ function walkTheWorld(x:number, y:number): boolean {
   return true;
 }
 
-function isIsland(x: number, y: number):boolean {
+function isIsland(x: number, y: number): boolean {
   return walkTheWorld(x, y);
 }
 
-function calculateIslands():number {
+function calculateIslands(): number {
   let islands = 0;
   visited = {};
 
@@ -71,8 +72,18 @@ function deleteLand(position: string): void {
   delete world[position];
 }
 
-function isWorldEmpty() {  
+function isWorldEmpty() {
   return !Object.keys(world).length;
 }
 
-export { world, walkTheWorld, calculateIslands, setWorld, getWorld, setLand, deleteLand, isWorldEmpty };
+
+function parseWorld(coordinates: CoordinatesArray) {
+  const newWorld = {};
+  coordinates.forEach(cor => {
+    const [x, y] = cor;
+    newWorld[`${x}_${y}`] = 1;
+  });
+  return setWorld(newWorld);
+}
+
+export { world, walkTheWorld, calculateIslands, setWorld, getWorld, setLand, deleteLand, isWorldEmpty, parseWorld };

@@ -1,44 +1,79 @@
-import * as React from 'react'
-import { render, fireEvent, screen, waitFor, act } from '@testing-library/react';
+import * as React from 'react';
+import {
+  render,
+  fireEvent,
+  screen,
+  waitForElementToBeRemoved,
+  act,
+  waitFor,
+} from '@testing-library/react';
 import { StatsProvider } from 'context/StatsContext';
 import { MAX_VALUE, MIN_VALUE } from 'components/SizeInput';
 import { isWorldEmpty } from 'lib/world';
+import { newWorld } from 'hooks/useRequest';
 import Index from '../pages/index';
 
 describe('<Index Page />', () => {
   // code for AutoSizer
-  const originalOffsetHeight = Object.getOwnPropertyDescriptor(HTMLElement.prototype, 'offsetHeight');
-  const originalOffsetWidth = Object.getOwnPropertyDescriptor(HTMLElement.prototype, 'offsetWidth');
-  
+  const originalOffsetHeight = Object.getOwnPropertyDescriptor(
+    HTMLElement.prototype,
+    'offsetHeight'
+  );
+  const originalOffsetWidth = Object.getOwnPropertyDescriptor(
+    HTMLElement.prototype,
+    'offsetWidth'
+  );
+
   beforeEach(() => {
     jest.useFakeTimers();
+    fetch.resetMocks();
   });
 
   beforeAll(() => {
-    Object.defineProperty(HTMLElement.prototype, 'offsetHeight', { configurable: true, value: 50 });
-    Object.defineProperty(HTMLElement.prototype, 'offsetWidth', { configurable: true, value: 50 });
-    jest.useRealTimers()
+    Object.defineProperty(HTMLElement.prototype, 'offsetHeight', {
+      configurable: true,
+      value: 50,
+    });
+    Object.defineProperty(HTMLElement.prototype, 'offsetWidth', {
+      configurable: true,
+      value: 50,
+    });
+    jest.useRealTimers();
   });
 
   afterAll(() => {
-    Object.defineProperty(HTMLElement.prototype, 'offsetHeight', originalOffsetHeight);
-    Object.defineProperty(HTMLElement.prototype, 'offsetWidth', originalOffsetWidth);
+    Object.defineProperty(
+      HTMLElement.prototype,
+      'offsetHeight',
+      originalOffsetHeight
+    );
+    Object.defineProperty(
+      HTMLElement.prototype,
+      'offsetWidth',
+      originalOffsetWidth
+    );
   });
 
-  it('renders and tests component', async() => {
+  it('renders and tests component', async () => {
+    fetch.mockResponseOnce(JSON.stringify(newWorld));
     render(
       <StatsProvider>
         <Index />
       </StatsProvider>
     );
 
-    const widthInput = screen.getByLabelText('Width:')
-    const heigthInput = screen.getByLabelText('Height:')
-    
-    fireEvent.change(widthInput, { target: { value: '10' } }); 
-    fireEvent.change(heigthInput, { target: { value: '10' } }); 
+    await waitForElementToBeRemoved(() => screen.queryByText('loading ...'));
+    await waitFor(() => {
+      expect(screen.getByLabelText('Width:')).toBeInTheDocument();
+    });
+
+    const widthInput = screen.getByLabelText('Width:');
+    const heigthInput = screen.getByLabelText('Height:');
+
+    fireEvent.change(widthInput, { target: { value: '10' } });
+    fireEvent.change(heigthInput, { target: { value: '10' } });
     act(() => jest.advanceTimersByTime(100));
-    
+
     const allCells = screen.getAllByTestId('grid-cell');
     expect(allCells.length).toBe(20);
     // create islands
@@ -62,20 +97,29 @@ describe('<Index Page />', () => {
     expect(screen.getByText('0 islands')).toBeTruthy();
     expect(isWorldEmpty()).toBe(true);
   });
- 
+
   it('renders and fires inputs validations', async () => {
+    fetch.mockResponseOnce(JSON.stringify(newWorld));
     jest.spyOn(window, 'alert').mockImplementation(() => {});
     render(
       <StatsProvider>
         <Index />
       </StatsProvider>
     );
+    await waitForElementToBeRemoved(() => screen.queryByText('loading ...'));
+    await waitFor(() => {
+      expect(screen.getByLabelText('Width:')).toBeInTheDocument();
+    });
     const widthInput = screen.getByLabelText('Width:');
 
     fireEvent.change(widthInput, { target: { value: '1000000' } });
-    expect(window.alert).toBeCalledWith(`Oops, max value allowed is ${MAX_VALUE}`)
+    expect(window.alert).toBeCalledWith(
+      `Oops, max value allowed is ${MAX_VALUE}`
+    );
 
     fireEvent.change(widthInput, { target: { value: '0' } });
-    expect(window.alert).toBeCalledWith(`Oops, min value allowed is ${MIN_VALUE}`)
+    expect(window.alert).toBeCalledWith(
+      `Oops, min value allowed is ${MIN_VALUE}`
+    );
   });
 });
