@@ -1,26 +1,37 @@
-import * as React from "react";
-import Head from "next/head";
-import SizeInput from "components/SizeInput";
-import Cursor from "components/Cursor";
-import Stats from "components/Stats";
-import World, { BOARD_SIZE } from "components/GridWorld";
-import { setWorld } from "lib/world";
-import { useStatsDispatch } from "context/StatsContext";
-import useRequest from "hooks/useRequest";
-import useWorldInitializer from "hooks/useWorldInitializer";
+import * as React from 'react';
+import Head from 'next/head';
+import { useQuery, useIsFetching } from 'react-query';
+import SizeInput from 'components/SizeInput';
+import Cursor from 'components/Cursor';
+import Stats from 'components/Stats';
+import World, { BOARD_SIZE } from 'components/GridWorld';
+import { setWorld } from 'lib/world';
+import { useStatsDispatch } from 'context/StatsContext';
+import useRequest, { newWorld } from 'hooks/useRequest';
+import useWorldInitializer from 'hooks/useWorldInitializer';
 
 function resetWorld(dispatch: Function): void {
-  dispatch({ type: "reset" });
+  dispatch({ type: 'reset' });
   setWorld({});
 }
 
 export default function Home() {
   const [columns, setColumns] = React.useState(BOARD_SIZE);
   const [rows, setRows] = React.useState(BOARD_SIZE);
-  const { data, isLoading } = useRequest();
+  const isFetching = useIsFetching();
+  // const { data, isLoading } = useRequest();
   const dispatch = useStatsDispatch();
+  const { isLoading, data } = useQuery('loadMap', () =>
+    fetch('http://swapi.dev/api/people/1').then(
+      (res) =>
+        new Promise((resolve) => {
+          resolve(newWorld);
+        })
+    )
+  );
+  // console.log(data);
 
-  useWorldInitializer(data);
+  useWorldInitializer((data as any) || []);
 
   function onChangeWidth(value) {
     resetWorld(dispatch);
@@ -41,6 +52,7 @@ export default function Home() {
         <meta property="og:image" content="/poster.png" />
       </Head>
       <main>
+        {isFetching ? <div>.....</div> : null}
         {isLoading ? (
           <div className="loading">loading ...</div>
         ) : (
