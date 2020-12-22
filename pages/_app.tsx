@@ -1,12 +1,17 @@
-import '../styles/globals.css'
+import { useIsFetching, QueryClient, QueryClientProvider } from 'react-query';
+import '../styles/globals.css';
 import { StatsProvider } from 'context/StatsContext';
+
+const queryClient = new QueryClient();
 
 function MyApp({ Component, pageProps }) {
   return (
-    <StatsProvider>
-      <Component {...pageProps} />
-    </StatsProvider>
+    <QueryClientProvider client={queryClient}>
+      <StatsProvider>
+        <Component {...pageProps} />
+      </StatsProvider>
+    </QueryClientProvider>
   );
 }
 
-export default MyApp
+export default MyApp;
