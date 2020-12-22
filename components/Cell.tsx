@@ -15,7 +15,6 @@ export default function Cell({ columnIndex, rowIndex, style }: CellProps) {
   const world = getWorld();
   const [color, setColor] = React.useState(world[memPosition] || 0);
 
-  // debugger;
   // this is needed by react-virtualized to render the cell correctly
   style = {
     ...style,
@@ -29,7 +28,6 @@ export default function Cell({ columnIndex, rowIndex, style }: CellProps) {
       style={style}
       onClick={() => {
         const newValue = 1 - color; // toggle color between 0 and 1
-        debugger;
         if (newValue) {
           setLand(memPosition, newValue);
         } else {
