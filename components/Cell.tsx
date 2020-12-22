@@ -1,5 +1,4 @@
-
-import * as React from "react";
+import * as React from 'react';
 import { colors } from 'styles/colors';
 import { getWorld, calculateIslands, setLand, deleteLand } from 'lib/world';
 import { useStatsDispatch } from 'context/StatsContext';
@@ -7,7 +6,7 @@ import { useStatsDispatch } from 'context/StatsContext';
 interface CellProps {
   columnIndex: number;
   rowIndex: number;
-  style: object,
+  style: object;
 }
 
 export default function Cell({ columnIndex, rowIndex, style }: CellProps) {
@@ -15,7 +14,7 @@ export default function Cell({ columnIndex, rowIndex, style }: CellProps) {
   const memPosition = `${columnIndex}_${rowIndex}`;
   const world = getWorld();
   const [color, setColor] = React.useState(world[memPosition] || 0);
-    
+
   // this is needed by react-virtualized to render the cell correctly
   style = {
     ...style,
@@ -31,18 +30,19 @@ export default function Cell({ columnIndex, rowIndex, style }: CellProps) {
         const newValue = 1 - color; // toggle color between 0 and 1
         if (newValue) {
           setLand(memPosition, newValue);
-        } else { // clean up memory for easier loop later
+        } else {
+          // clean up memory for easier loop later
           deleteLand(memPosition);
         }
         setColor(newValue);
         dispatch({
-          type: 'square', 
+          type: 'square',
           islandsCount: calculateIslands(),
           squaresCount: Object.keys(world).length,
-        });        
+        });
       }}
-      onMouseEnter={() => { 
-        dispatch({type: 'cursor', cursor:{ x: columnIndex, y: rowIndex}}); 
+      onMouseEnter={() => {
+        dispatch({ type: 'cursor', cursor: { x: columnIndex, y: rowIndex } });
       }}
     ></div>
   );

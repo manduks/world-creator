@@ -20,5 +20,6 @@ module.exports = {
     '^context(.*)$': '<rootDir>/context$1',
     '^styles(.*)$': '<rootDir>/styles$1',
     '^lib(.*)$': '<rootDir>/lib$1',
+    '^hooks(.*)$': '<rootDir>/hooks$1',
   },
-}
+};
