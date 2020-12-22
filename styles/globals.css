@@ -178,7 +178,7 @@ h1 {
   justify-content: center;
   align-items: center;
   width: 100%;
-  height: calc(100vh - 160px); /* header and footer */
+  height: calc(100vh - 160px);
 }
 
 .cell:hover {
