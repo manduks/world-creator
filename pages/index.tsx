@@ -1,5 +1,4 @@
 import * as React from 'react';
-// import { useQuery } from 'react-query';
 import Head from 'next/head';
 import SizeInput from 'components/SizeInput';
 import Cursor from 'components/Cursor';

@@ -1,4 +1,3 @@
-import { QueryClient, QueryClientProvider } from 'react-query';
 import '../styles/globals.css';
 import { StatsProvider } from 'context/StatsContext';
 

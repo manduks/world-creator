@@ -28,9 +28,6 @@ export default function Cell({ columnIndex, rowIndex, style }: CellProps) {
       data-testid="grid-cell"
       style={style}
       onClick={() => {
-        console.log(memPosition);
-        console.log(color);
-
         const newValue = 1 - color; // toggle color between 0 and 1
         debugger;
         if (newValue) {
