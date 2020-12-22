@@ -10,12 +10,12 @@ let visited = {};
  * we check if it is an island and also continue to walk the island
  * to mark other squares as visited to avoid walking twice the same island
  */
-function walkTheWorld(x:number, y:number): boolean {
-  if(isWorldEmpty()) {
+function walkTheWorld(x: number, y: number): boolean {
+  if (isWorldEmpty()) {
     return false;
   }
 
-  visited[`${x}_${y}`] = true;  
+  visited[`${x}_${y}`] = true;
   //forward
   if (world[`${x + 1}_${y}`] && !visited[`${x + 1}_${y}`]) {
     walkTheWorld(x + 1, y);
@@ -35,11 +35,11 @@ function walkTheWorld(x:number, y:number): boolean {
   return true;
 }
 
-function isIsland(x: number, y: number):boolean {
+function isIsland(x: number, y: number): boolean {
   return walkTheWorld(x, y);
 }
 
-function calculateIslands():number {
+function calculateIslands(): number {
   let islands = 0;
   visited = {};
 
@@ -71,7 +71,7 @@ function deleteLand(position: string): void {
   delete world[position];
 }
 
-function isWorldEmpty() {  
+function isWorldEmpty() {
   return !Object.keys(world).length;
 }
 

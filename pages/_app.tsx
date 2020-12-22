@@ -1,4 +1,5 @@
-import '../styles/globals.css'
+import { QueryClient, QueryClientProvider } from 'react-query';
+import '../styles/globals.css';
 import { StatsProvider } from 'context/StatsContext';
 
 function MyApp({ Component, pageProps }) {
@@ -9,4 +10,4 @@ function MyApp({ Component, pageProps }) {
   );
 }
 
-export default MyApp
+export default MyApp;
