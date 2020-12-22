@@ -62,7 +62,11 @@ function createMap(hashes) {
   const map = {};
   hashes.forEach((hash, y) => {
     for (var x = 0; x < hash.length; x++) {
-      map[`${x}_${y}`] = isNaN(Number(hash[x])) ? 1 : 0;
+      // memory optimization, only write to memory true cells
+      // true cells are letters
+      if (isNaN(Number(hash[x]))) {
+        map[`${x}_${y}`] = 1;
+      }
     }
   });
   setWorld({ ...map });
@@ -92,7 +96,7 @@ export default function useInitMap() {
         setError(error);
       }
     }
-    createMap(parseData(mapData.tx.slice(0, 10)));
+    createMap(parseData(mapData.tx.slice(0, 100)));
     setIsLodaing(false);
   }
 
